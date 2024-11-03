@@ -7,7 +7,6 @@ public class PingResult implements Serializable {
     private String icmpResult = "ICMP ping not initialized or completed for given host yet";
     private String tcpResult = "TCP/IP/HTTP ping not initialized or completed for given host yet";
     private String traceResult = "Trace Route not initialized or completed for given host yet";
-    private Boolean sendReportAlert = false;
 
     public PingResult(String host) {
         this.host = host;
@@ -27,10 +26,6 @@ public class PingResult implements Serializable {
 
     public void setTraceResult(String traceResult) {
         this.traceResult = traceResult;
-    }
-
-    public void setSendReportAlert(Boolean sendReportAlert) {
-        this.sendReportAlert = sendReportAlert;
     }
 
     @Override

@@ -15,12 +15,13 @@ import java.util.Properties;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
+import java.util.logging.Logger;
 
 public class PingMonitor {
 
     private static List<String> hosts;
     private static int delay;
-    private static String logFileName;
+    private static final Logger logger = LoggerUtil.getLogger();
     private static final ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(12);
 
     static {
@@ -48,20 +49,20 @@ public class PingMonitor {
             properties.load(input);
             hosts = Arrays.asList(properties.getProperty("hosts").split(","));
             delay = Integer.parseInt(properties.getProperty("delay"));
-            logFileName = properties.getProperty("log.filename");
+            String logFileName = properties.getProperty("log.filename");
+
             LoggerUtil.setupLogger(logFileName);
-            System.out.println(" hosts " + hosts + " delay " + delay);
+            logger.info("Initializing Monitoring for hosts: " + hosts + " with delay: " + delay);
         } catch (IOException e) {
-            System.out.println("Sorry, unable to find config.properties");
-            e.printStackTrace();
+            logger.severe("Sorry, unable to find config.properties: " + e.getMessage());
         }
     }
 
     private static void startTasks() {
         for (String host : hosts) {
             PingResult emptyResult = new PingResult(host);
-            //scheduler.scheduleAtFixedRate(new ICMPPing(emptyResult), 0, delay, TimeUnit.SECONDS);
-            //scheduler.scheduleAtFixedRate(new TraceRoute(emptyResult), 0, delay, TimeUnit.SECONDS);
+            scheduler.scheduleAtFixedRate(new ICMPPing(emptyResult), 0, delay, TimeUnit.SECONDS);
+            scheduler.scheduleAtFixedRate(new TraceRoute(emptyResult), 0, delay, TimeUnit.SECONDS);
         }
     }
 }

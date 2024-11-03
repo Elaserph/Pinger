@@ -1,6 +1,7 @@
 package org.pinger.ping;
 
 import org.pinger.model.PingResult;
+import org.pinger.monitor.LoggerUtil;
 import org.pinger.monitor.Report;
 
 import java.io.IOException;
@@ -10,7 +11,7 @@ import java.util.logging.Logger;
 
 public class HTTPPing implements Runnable {
     private final String host;
-    private static final Logger logger = Logger.getLogger(HTTPPing.class.getName());
+    private static final Logger logger = LoggerUtil.getLogger();
     private static final int TIMEOUT = 2000; // Timeout for HTTP request
     private final PingResult result;
 
