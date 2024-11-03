@@ -35,6 +35,8 @@ public class TraceRoute implements Runnable {
             }
 
             result.setTraceResult(output.toString());
+            result.setTraceFlag(true);
+            new Report(result).sendReport();
             logger.info("Trace Route result for " + host + ": " + output);
             System.out.println("Trace Route ends for host: " + host);
         } catch (Exception e) {

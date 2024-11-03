@@ -34,10 +34,12 @@ public class ICMPPing implements Runnable {
             }
 
             result.setIcmpResult(output.toString());
+            result.setIcmpFlag(true);
             logger.info("ICMP Ping result for " + host + ": " + output);
 
             //Check for packet loss or timeout
             if (!(output.toString().contains("Lost = 0"))) {
+                result.setIcmpReportFlag(true);
                 new Report(result).sendReport(); //Trigger reporting on failure
             }
             System.out.println("ICMP Ping ends for host: " + host);

@@ -22,7 +22,16 @@ public class Report {
         Report.reportURL = reportUrl;
     }
 
-    public void sendReport() {
+    public synchronized void sendReport() {
+        if (result.getIcmpFlag() && result.getTraceFlag() && result.getIcmpReportFlag()) {
+            result.setIcmpFlag(false);
+            result.setTraceFlag(false);
+            result.setIcmpReportFlag(false);
+            executePOSTRequest();
+        }
+    }
+
+    private void executePOSTRequest() {
         try {
             System.out.println("Reporting starts for host: " + result.getHost());
             URL url = new URL(reportURL);
