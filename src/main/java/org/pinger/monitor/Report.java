@@ -12,16 +12,20 @@ public class Report {
 
     private final PingResult result;
     private static final Logger logger = LoggerUtil.getLogger();
-    private static final String REPORT_URL = "http://example.com/report"; //Replace with actual reporting URL
+    private static String reportURL;
 
     public Report(PingResult result) {
         this.result = result;
     }
 
+    public static void setReportUrl(String reportUrl) {
+        Report.reportURL = reportUrl;
+    }
+
     public void sendReport() {
         try {
             System.out.println("Reporting starts for host: " + result.getHost());
-            URL url = new URL(REPORT_URL);
+            URL url = new URL(reportURL);
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
             connection.setDoOutput(true);
             connection.setRequestMethod("POST");

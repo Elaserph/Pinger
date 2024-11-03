@@ -11,19 +11,20 @@ import java.util.logging.Logger;
 public class ICMPPing implements Runnable {
     private final String host;
     private static final Logger logger = LoggerUtil.getLogger();
-    private static final int TIMEOUT = 2000; // Timeout for the ping command
+    private final int timeout;
     private final PingResult result;
 
-    public ICMPPing(PingResult result) {
+    public ICMPPing(PingResult result, int timeout) {
         this.host = result.getHost();
         this.result = result;
+        this.timeout = timeout;
     }
 
     @Override
     public void run() {
         try {
             System.out.println("ICMP Ping start for host: " + host);
-            Process process = Runtime.getRuntime().exec("ping -n 5 " + host);
+            Process process = Runtime.getRuntime().exec("ping -n 5 -w " + timeout + " " + host);
             BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
             StringBuilder output = new StringBuilder();
             String line;

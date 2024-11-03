@@ -12,18 +12,20 @@ public class TraceRoute implements Runnable {
 
     private final String host;
     private static final Logger logger = LoggerUtil.getLogger();
+    private final int timeout;
     private final PingResult result;
 
-    public TraceRoute(PingResult result) {
+    public TraceRoute(PingResult result, int timeout) {
         this.host = result.getHost();
         this.result = result;
+        this.timeout = timeout;
     }
 
     @Override
     public void run() {
         try {
             System.out.println("Trace Route start for host: " + host);
-            Process process = Runtime.getRuntime().exec("tracert -h 10 " + host);
+            Process process = Runtime.getRuntime().exec("tracert -h 30 -w " + timeout + " " + host);
             BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
             StringBuilder output = new StringBuilder();
             String line;
