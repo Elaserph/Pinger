@@ -12,7 +12,7 @@ import java.util.logging.Logger;
 public class HTTPPing implements Callable<Boolean> {
     private final String host;
     private static final Logger logger = LoggerUtil.getLogger();
-    private int timeout = 2000; // Timeout for HTTP request
+    private final int timeout;
     private final PingResult result;
 
     public HTTPPing(PingResult result, int timeout) {
@@ -24,7 +24,6 @@ public class HTTPPing implements Callable<Boolean> {
     @Override
     public Boolean call() {
         try {
-            System.out.println("HTTP start for host: " + host);
             long startTime = System.currentTimeMillis();
             URL url = new URL("http://" + host);
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
@@ -34,10 +33,9 @@ public class HTTPPing implements Callable<Boolean> {
             int responseCode = connection.getResponseCode();
             long responseTime = System.currentTimeMillis() - startTime;
 
-            String output = "Response Code: " + responseCode + ", Time: " + responseTime + " ms";
+            String output = "Response Code: " + responseCode + ", Time: " + responseTime + " ms against timeOut: " + timeout + " ms";
             result.setTcpResult(output);
             logger.info("TCP Ping result for " + host + ": " + output);
-            System.out.println("HTTP end for host: " + host);
 
             //return true or false based on success condition
             return responseCode == 200 && responseTime <= timeout;

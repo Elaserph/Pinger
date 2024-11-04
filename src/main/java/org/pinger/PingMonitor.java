@@ -25,6 +25,7 @@ public class PingMonitor {
     private static int httpTimeout;
     private static int traceTimeout;
     private static final Logger logger = LoggerUtil.getLogger();
+    private static final Logger defaultLogger = Logger.getLogger(PingMonitor.class.getName());
     private static final ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(12);
 
     static {
@@ -68,6 +69,7 @@ public class PingMonitor {
 
     private static void startTasks() {
         for (String host : hosts) {
+            defaultLogger.info("Monitoring starts for host: " + host);
             PingResult result = new PingResult(host);
             scheduler.scheduleWithFixedDelay(() -> runScheduledTasks(result), 0, delay, TimeUnit.SECONDS);
         }
@@ -93,6 +95,7 @@ public class PingMonitor {
                     } catch (InterruptedException | ExecutionException e) {
                         logger.warning("Error collecting results for host: " + result.getHost() + " " + e.getMessage());
                     }
+                    defaultLogger.info("Monitoring ends for host: " + result.getHost());
                 });
     }
 }

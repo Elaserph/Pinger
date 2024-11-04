@@ -24,7 +24,6 @@ public class TraceRoute implements Callable<Boolean> {
     @Override
     public Boolean call() {
         try {
-            System.out.println("Trace Route start for host: " + host);
             Process process = Runtime.getRuntime().exec("tracert -h 30 -w " + timeout + " " + host);
             BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
             StringBuilder output = new StringBuilder();
@@ -36,7 +35,6 @@ public class TraceRoute implements Callable<Boolean> {
 
             result.setTraceResult(output.toString());
             logger.info("Trace Route result for " + host + ": " + output);
-            System.out.println("Trace Route ends for host: " + host);
             return true;
         } catch (Exception e) {
             logger.warning("Error during trace route: " + e.getMessage());

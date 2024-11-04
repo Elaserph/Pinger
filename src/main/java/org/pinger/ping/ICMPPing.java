@@ -23,7 +23,6 @@ public class ICMPPing implements Callable<Boolean> {
     @Override
     public Boolean call() {
         try {
-            System.out.println("ICMP Ping start for host: " + host);
             Process process = Runtime.getRuntime().exec("ping -n 5 -w " + timeout + " " + host);
             BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
             StringBuilder output = new StringBuilder();
@@ -35,7 +34,6 @@ public class ICMPPing implements Callable<Boolean> {
 
             result.setIcmpResult(output.toString());
             logger.info("ICMP Ping result for " + host + ": " + output);
-            System.out.println("ICMP Ping ends for host: " + host);
             //return true or false based on packet loss or timeout
             return output.toString().contains("Lost = 0");
         } catch (Exception e) {

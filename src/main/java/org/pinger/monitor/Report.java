@@ -17,7 +17,6 @@ public class Report {
 
     public void sendReport(String jsonBody) {
         try {
-            System.out.println("Reporting starts for : " + jsonBody.substring(jsonBody.indexOf(":"), jsonBody.indexOf(",")));
             URL url = new URL(reportURL);
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
             connection.setDoOutput(true);
@@ -33,7 +32,6 @@ public class Report {
             int responseCode = connection.getResponseCode();
             if (responseCode != 200)
                 logger.severe("Something went wrong: " + jsonBody);
-            System.out.println("Reporting ends for host: " + jsonBody.substring(jsonBody.indexOf(":"), jsonBody.indexOf(",")));
         } catch (Exception e) {
             logger.warning("Error during reporting: " + e.getMessage());
         }
