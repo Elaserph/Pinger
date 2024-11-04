@@ -80,7 +80,7 @@ public class PingMonitor {
         CompletableFuture<Boolean> traceFuture = CompletableFuture.supplyAsync(() -> new TraceRoute(result, traceTimeout).call());
 
         // Wait for all tasks to complete and handle reporting
-        CompletableFuture.allOf(icmpFuture, traceFuture)
+        CompletableFuture.allOf(icmpFuture, httpFuture, traceFuture)
                 .thenRun(() -> {
                     try {
                         Boolean icmpResult = icmpFuture.get();
