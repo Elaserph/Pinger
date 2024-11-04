@@ -16,8 +16,16 @@ public class Config {
         return hosts;
     }
 
+    public void setHosts(List<String> hosts) {
+        this.hosts = hosts;
+    }
+
     public int getDelay() {
         return delay;
+    }
+
+    public void setDelay(int delay) {
+        this.delay = delay;
     }
 
     public int getHTTPTimeout() {
@@ -26,6 +34,10 @@ public class Config {
 
     public String getReportURL() {
         return reportURL;
+    }
+
+    public void setReportURL(String reportURL) {
+        this.reportURL = reportURL;
     }
 
     public int getIcmpTimeout() {
@@ -48,18 +60,6 @@ public class Config {
         this.httpTimeout = httpTimeout;
     }
 
-    public void setDelay(int delay) {
-        this.delay = delay;
-    }
-
-    public void setHosts(List<String> hosts) {
-        this.hosts = hosts;
-    }
-
-    public void setReportURL(String reportURL) {
-        this.reportURL = reportURL;
-    }
-
     public int getMaxResponseTime() {
         return maxResponseTime;
     }
@@ -70,7 +70,7 @@ public class Config {
 
     public boolean checkProperties() {
         return this.hosts != null && !this.hosts.isEmpty() && this.delay != 0 && this.icmpTimeout != 0
-                && this.httpTimeout != 0 &&  this.maxResponseTime != 0 && this.traceTimeout != 0 && this.reportURL != null;
+                && this.httpTimeout != 0 && this.maxResponseTime != 0 && this.traceTimeout != 0 && this.reportURL != null;
     }
 
 }
