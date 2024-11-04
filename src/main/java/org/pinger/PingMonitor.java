@@ -3,6 +3,7 @@ package org.pinger;
 import org.pinger.model.PingResult;
 import org.pinger.monitor.LoggerUtil;
 import org.pinger.monitor.Report;
+import org.pinger.ping.HTTPPing;
 import org.pinger.ping.ICMPPing;
 import org.pinger.ping.TraceRoute;
 
@@ -13,9 +14,7 @@ import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Properties;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.TimeUnit;
+import java.util.concurrent.*;
 import java.util.logging.Logger;
 
 public class PingMonitor {
@@ -69,9 +68,31 @@ public class PingMonitor {
 
     private static void startTasks() {
         for (String host : hosts) {
-            PingResult emptyResult = new PingResult(host);
-            scheduler.scheduleAtFixedRate(new ICMPPing(emptyResult, icmpTimeout), 0, delay, TimeUnit.SECONDS);
-            scheduler.scheduleAtFixedRate(new TraceRoute(emptyResult, traceTimeout), 0, delay, TimeUnit.SECONDS);
+            PingResult result = new PingResult(host);
+            scheduler.scheduleWithFixedDelay(() -> runScheduledTasks(result), 0, delay, TimeUnit.SECONDS);
         }
+    }
+
+    private static void runScheduledTasks(PingResult result) {
+        // Run ICMP, TCP, and Trace Route tasks concurrently using CompletableFuture
+        CompletableFuture<Boolean> icmpFuture = CompletableFuture.supplyAsync(() -> new ICMPPing(result, icmpTimeout).call());
+        CompletableFuture<Boolean> httpFuture = CompletableFuture.supplyAsync(() -> new HTTPPing(result, httpTimeout).call());
+        CompletableFuture<Boolean> traceFuture = CompletableFuture.supplyAsync(() -> new TraceRoute(result, traceTimeout).call());
+
+        // Wait for all tasks to complete and handle reporting
+        CompletableFuture.allOf(icmpFuture, traceFuture)
+                .thenRun(() -> {
+                    try {
+                        Boolean icmpResult = icmpFuture.get();
+                        Boolean httpResult = httpFuture.get();
+
+                        // Check if we should send a report
+                        if (Boolean.FALSE.equals(icmpResult) || Boolean.FALSE.equals(httpResult)) {
+                            new Report().sendReport(result.toJson());
+                        }
+                    } catch (InterruptedException | ExecutionException e) {
+                        logger.warning("Error collecting results for host: " + result.getHost() + " " + e.getMessage());
+                    }
+                });
     }
 }

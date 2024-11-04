@@ -2,13 +2,13 @@ package org.pinger.ping;
 
 import org.pinger.model.PingResult;
 import org.pinger.monitor.LoggerUtil;
-import org.pinger.monitor.Report;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
+import java.util.concurrent.Callable;
 import java.util.logging.Logger;
 
-public class TraceRoute implements Runnable {
+public class TraceRoute implements Callable<Boolean> {
 
     private final String host;
     private static final Logger logger = LoggerUtil.getLogger();
@@ -22,7 +22,7 @@ public class TraceRoute implements Runnable {
     }
 
     @Override
-    public void run() {
+    public Boolean call() {
         try {
             System.out.println("Trace Route start for host: " + host);
             Process process = Runtime.getRuntime().exec("tracert -h 30 -w " + timeout + " " + host);
@@ -35,13 +35,12 @@ public class TraceRoute implements Runnable {
             }
 
             result.setTraceResult(output.toString());
-            result.setTraceFlag(true);
-            new Report(result).sendReport();
             logger.info("Trace Route result for " + host + ": " + output);
             System.out.println("Trace Route ends for host: " + host);
+            return true;
         } catch (Exception e) {
             logger.warning("Error during trace route: " + e.getMessage());
-            new Report(result).sendReport(); //Trigger reporting on failure
+            return false;
         }
     }
 }
