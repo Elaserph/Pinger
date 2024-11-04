@@ -13,7 +13,9 @@ public class SimplePingApplication {
     private static final Logger logger = LoggerUtil.getLogger();
 
     public static void main(String[] args) {
+        // load user configurations from config.properties file
         Config loadedConfig = ConfigLoader.loadConfig();
+        // check sanity
         if (loadedConfig.checkProperties()) {
             PingMonitor monitor = new PingMonitor(loadedConfig);
             monitor.startTasks();

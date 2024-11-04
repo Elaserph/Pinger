@@ -22,9 +22,10 @@ public final class ConfigLoader {
         Properties properties = new Properties();
         Config config = new Config();
 
+        // config file need to be present in pwd
         try (InputStream input = Files.newInputStream(Paths.get("../Config.properties"))) {
             properties.load(input);
-            //load all configurations into config object
+            // load all configurations into config object
             config.setHosts(Arrays.asList(properties.getProperty("hosts").split(",")));
             config.setDelay(Integer.parseInt(properties.getProperty("delay")));
             config.setIcmpTimeout(Integer.parseInt(properties.getProperty("icmp.timeout")));
@@ -34,6 +35,7 @@ public final class ConfigLoader {
             config.setReportURL(properties.getProperty("report.url"));
             String logFileName = properties.getProperty("log.filename");
 
+            // configuration report url and logger
             Report.setReportUrl(config.getReportURL());
             LoggerUtil.setupLogger(logFileName);
             logger.info("Initializing Monitoring for hosts: " + config.getHosts() + " with periodic delay: " + config.getDelay());

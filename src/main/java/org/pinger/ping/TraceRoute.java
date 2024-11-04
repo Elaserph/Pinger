@@ -36,6 +36,8 @@ public class TraceRoute implements Callable<Boolean> {
             String resultString = "Trace Route result for " + host + ": " + output;
             result.setTraceResult(resultString);
             logger.info(resultString);
+
+            // no extrinsic logic for trace route 'failure check' as the requirements do not state to send report on trace route 'failure'
             return true;
         } catch (Exception e) {
             logger.warning("Error during trace route: " + e.getMessage());

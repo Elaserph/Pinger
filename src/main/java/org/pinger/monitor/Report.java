@@ -22,10 +22,13 @@ public class Report {
         try {
             URL url = new URL(reportURL);
             HttpURLConnection connection = getHttpURLConnection(jsonBody, url);
-
             int responseCode = connection.getResponseCode();
+
+            // assuming will get response code as 200 on success.
             if (responseCode != HttpURLConnection.HTTP_OK)
-                logger.severe("Something went wrong: " + jsonBody);
+                logger.severe("Something went wrong, response code: " + responseCode + " \n while sending report" + jsonBody);
+            else
+                logger.info("Report sent successfully: " + jsonBody);
         } catch (Exception e) {
             logger.warning("Error during reporting: " + e.getMessage());
         }
