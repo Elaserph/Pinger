@@ -1,7 +1,7 @@
 package org.pinger.ping;
 
 import org.pinger.model.PingResult;
-import org.pinger.monitor.LoggerUtil;
+import org.pinger.util.LoggerUtil;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -9,8 +9,9 @@ import java.util.concurrent.Callable;
 import java.util.logging.Logger;
 
 public class ICMPPing implements Callable<Boolean> {
-    private final String host;
+
     private static final Logger logger = LoggerUtil.getLogger();
+    private final String host;
     private final int timeout;
     private final PingResult result;
 

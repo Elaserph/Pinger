@@ -3,6 +3,7 @@ package org.pinger.model;
 import java.io.Serializable;
 
 public class PingResult implements Serializable {
+
     private final String host;
     private String icmpResult;
     private String tcpResult;

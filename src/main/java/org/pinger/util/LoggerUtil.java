@@ -1,4 +1,4 @@
-package org.pinger.monitor;
+package org.pinger.util;
 
 import java.io.IOException;
 import java.util.logging.FileHandler;
@@ -6,13 +6,15 @@ import java.util.logging.Logger;
 import java.util.logging.SimpleFormatter;
 
 public final class LoggerUtil {
+
     private static final Logger logger = Logger.getLogger("PingMonitorLogger");
 
-    private LoggerUtil(){}
+    private LoggerUtil() {
+    }
 
-    public static void setupLogger(String logFileName)  {
+    public static void setupLogger(String logFileName) {
         try {
-            FileHandler fh = new FileHandler("../"+logFileName, true);
+            FileHandler fh = new FileHandler("../" + logFileName, true);
             fh.setFormatter(new SimpleFormatter());
             logger.addHandler(fh);
             logger.setUseParentHandlers(false);
