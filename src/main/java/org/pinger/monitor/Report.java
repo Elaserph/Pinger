@@ -20,8 +20,7 @@ public class Report {
 
     public void sendReport(String jsonBody) {
         try {
-            URL url = new URL(reportURL);
-            HttpURLConnection connection = getHttpURLConnection(jsonBody, url);
+            HttpURLConnection connection = getHttpURLConnection(jsonBody);
             int responseCode = connection.getResponseCode();
 
             // assuming will get response code as 200 on success.
@@ -34,7 +33,8 @@ public class Report {
         }
     }
 
-    private HttpURLConnection getHttpURLConnection(String jsonBody, URL url) throws IOException {
+    private HttpURLConnection getHttpURLConnection(String jsonBody) throws IOException {
+        URL url = new URL(reportURL);
         HttpURLConnection connection = (HttpURLConnection) url.openConnection();
         connection.setDoOutput(true);
         connection.setRequestMethod("POST");
