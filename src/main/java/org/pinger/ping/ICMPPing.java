@@ -33,12 +33,14 @@ public class ICMPPing implements Callable<Boolean> {
                 output.append(line).append("\n");
             }
 
-            result.setIcmpResult(output.toString());
-            logger.info("ICMP Ping result for " + host + ": " + output);
-            //return true or false based on packet loss or timeout
-            return output.toString().contains("Lost = 0");
+            String resultString = "ICMP Ping result for " + host + ": " + output;
+            result.setIcmpResult(resultString);
+            logger.info(resultString);
+            //when false, signal to send report based on packet loss or timeout
+            return resultString.contains("Lost = 0");
         } catch (Exception e) {
             logger.warning("Error during ICMP ping: " + e.getMessage());
+            //signal to send report
             return false;
         }
     }

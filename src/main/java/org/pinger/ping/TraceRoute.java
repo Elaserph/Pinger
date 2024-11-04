@@ -33,8 +33,9 @@ public class TraceRoute implements Callable<Boolean> {
                 output.append(line).append("\n");
             }
 
-            result.setTraceResult(output.toString());
-            logger.info("Trace Route result for " + host + ": " + output);
+            String resultString = "Trace Route result for " + host + ": " + output;
+            result.setTraceResult(resultString);
+            logger.info(resultString);
             return true;
         } catch (Exception e) {
             logger.warning("Error during trace route: " + e.getMessage());

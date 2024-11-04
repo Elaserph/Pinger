@@ -15,7 +15,7 @@ public class PingMonitor {
     private static final Logger defaultLogger = Logger.getLogger(PingMonitor.class.getName());
     private static final Logger logger = LoggerUtil.getLogger();
     private static final ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(12);
-    private final Config userConfiguration;
+    private final Config userConfig;
 
     static {
         Runtime.getRuntime().addShutdownHook(new Thread(() -> {
@@ -30,23 +30,23 @@ public class PingMonitor {
         }));
     }
 
-    public PingMonitor(Config userConfiguration) {
-        this.userConfiguration = userConfiguration;
+    public PingMonitor(Config userConfig) {
+        this.userConfig = userConfig;
     }
 
     public void startTasks() {
-        for (String host : userConfiguration.getHosts()) {
+        for (String host : userConfig.getHosts()) {
             defaultLogger.info("Ping starts for host: " + host);
             PingResult result = new PingResult(host);
-            scheduler.scheduleWithFixedDelay(() -> runScheduledTasks(result), 0, userConfiguration.getDelay(), TimeUnit.SECONDS);
+            scheduler.scheduleWithFixedDelay(() -> runScheduledTasks(result), 0, userConfig.getDelay(), TimeUnit.SECONDS);
         }
     }
 
     private void runScheduledTasks(PingResult result) {
-        // Run ICMP, TCP, and Trace Route tasks concurrently using CompletableFuture
-        CompletableFuture<Boolean> icmpFuture = CompletableFuture.supplyAsync(() -> new ICMPPing(result, userConfiguration.getIcmpTimeout()).call());
-        CompletableFuture<Boolean> httpFuture = CompletableFuture.supplyAsync(() -> new HTTPPing(result, userConfiguration.getHTTPTimeout()).call());
-        CompletableFuture<Boolean> traceFuture = CompletableFuture.supplyAsync(() -> new TraceRoute(result, userConfiguration.getTraceTimeout()).call());
+        // Run ICMP, HTTP, and Trace Route tasks concurrently using CompletableFuture
+        CompletableFuture<Boolean> icmpFuture = CompletableFuture.supplyAsync(() -> new ICMPPing(result, userConfig.getIcmpTimeout()).call());
+        CompletableFuture<Boolean> httpFuture = CompletableFuture.supplyAsync(() -> new HTTPPing(result, userConfig.getHTTPTimeout(), userConfig.getMaxResponseTime()).call());
+        CompletableFuture<Boolean> traceFuture = CompletableFuture.supplyAsync(() -> new TraceRoute(result, userConfig.getTraceTimeout()).call());
 
         // Wait for all tasks to complete and handle reporting
         CompletableFuture.allOf(icmpFuture, httpFuture, traceFuture)

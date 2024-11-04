@@ -24,10 +24,12 @@ public final class ConfigLoader {
 
         try (InputStream input = Files.newInputStream(Paths.get("../Config.properties"))) {
             properties.load(input);
+            //load all configurations into config object
             config.setHosts(Arrays.asList(properties.getProperty("hosts").split(",")));
             config.setDelay(Integer.parseInt(properties.getProperty("delay")));
             config.setIcmpTimeout(Integer.parseInt(properties.getProperty("icmp.timeout")));
             config.setHttpTimeout(Integer.parseInt(properties.getProperty("http.timeout")));
+            config.setMaxResponseTime(Integer.parseInt(properties.getProperty("http.maxtime")));
             config.setTraceTimeout(Integer.parseInt(properties.getProperty("trace.timeout")));
             config.setReportURL(properties.getProperty("report.url"));
             String logFileName = properties.getProperty("log.filename");

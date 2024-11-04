@@ -8,6 +8,7 @@ public class Config {
     private int delay;
     private int icmpTimeout;
     private int httpTimeout;
+    private int maxResponseTime;
     private int traceTimeout;
     private String reportURL;
 
@@ -58,4 +59,18 @@ public class Config {
     public void setReportURL(String reportURL) {
         this.reportURL = reportURL;
     }
+
+    public int getMaxResponseTime() {
+        return maxResponseTime;
+    }
+
+    public void setMaxResponseTime(int maxResponseTime) {
+        this.maxResponseTime = maxResponseTime;
+    }
+
+    public boolean checkProperties() {
+        return this.hosts != null && !this.hosts.isEmpty() && this.delay != 0 && this.icmpTimeout != 0
+                && this.httpTimeout != 0 &&  this.maxResponseTime != 0 && this.traceTimeout != 0 && this.reportURL != null;
+    }
+
 }
