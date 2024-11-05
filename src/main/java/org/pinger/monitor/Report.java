@@ -18,22 +18,25 @@ public class Report {
         Report.reportURL = reportUrl;
     }
 
-    public void sendReport(String jsonBody) {
+    public boolean sendReport(String jsonBody) {
         try {
-            HttpURLConnection connection = getHttpURLConnection(jsonBody);
-            int responseCode = connection.getResponseCode();
-
-            // assuming will get response code as 200 on success.
-            if (responseCode != HttpURLConnection.HTTP_OK)
+            int responseCode = getHttpResponse(jsonBody);
+            // assuming on success, will get response code 200.
+            if (responseCode != HttpURLConnection.HTTP_OK) {
                 logger.severe("Something went wrong, response code: " + responseCode + " \n while sending report" + jsonBody);
-            else
+                return false;
+            }
+            else {
                 logger.info("Report sent successfully: " + jsonBody);
+                return true;
+            }
         } catch (Exception e) {
             logger.warning("Error during reporting: " + e.getMessage());
+            return false;
         }
     }
 
-    private HttpURLConnection getHttpURLConnection(String jsonBody) throws IOException {
+    public int getHttpResponse(String jsonBody) throws IOException {
         URL url = new URL(reportURL);
         HttpURLConnection connection = (HttpURLConnection) url.openConnection();
         connection.setDoOutput(true);
@@ -44,6 +47,6 @@ public class Report {
             byte[] input = jsonBody.getBytes(StandardCharsets.UTF_8);
             os.write(input, 0, input.length);
         }
-        return connection;
+        return connection.getResponseCode();
     }
 }

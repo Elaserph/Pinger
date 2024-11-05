@@ -31,9 +31,9 @@ public class PingResult implements Serializable {
 
     public String toJson() {
         return "{" +
-                "\"host\":\"" + host + "\"," +
-                "\"icmp_ping\":\"" + icmpResult + "\"," +
-                "\"tcp_ping\":\"" + tcpResult + "\"," +
+                "\"host\":\"" + host + "\", " +
+                "\"icmp_ping\":\"" + icmpResult + "\", " +
+                "\"tcp_ping\":\"" + tcpResult + "\", " +
                 "\"trace\":\"" + traceResult + "\"" +
                 "}";
     }

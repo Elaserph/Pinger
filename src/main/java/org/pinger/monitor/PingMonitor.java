@@ -40,7 +40,12 @@ public class PingMonitor {
             defaultLogger.info("Ping starts for host: " + host);
             PingResult emptyResult = new PingResult(host); // ping processes will store their results in this object for a given host
             // scheduling the hosts for monitoring via ping with a user inputted periodic delay
-            scheduler.scheduleWithFixedDelay(() -> runScheduledTasks(emptyResult), 0, userConfig.getDelay(), TimeUnit.SECONDS);
+            scheduler.scheduleWithFixedDelay(
+                    () -> runScheduledTasks(emptyResult),
+                    0,
+                    userConfig.getDelay(),
+                    TimeUnit.SECONDS
+            );
         }
     }
 

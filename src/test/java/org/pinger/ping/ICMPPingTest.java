@@ -1,20 +1,21 @@
 package org.pinger.ping;
 
 import org.junit.jupiter.api.Test;
+import org.pinger.AbstractTest;
 import org.pinger.model.PingResult;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 
-class ICMPPingTest {
+class ICMPPingTest extends AbstractTest {
 
     private final int timeout = 1000;
     private PingResult result;
     private ICMPPing icmpPing;
 
     @Test
-    void testCall_Success() {
+    void call_Success() {
         // arrange
         result = new PingResult("localhost");   // localhost would always be pingable
         icmpPing = new ICMPPing(result, timeout);
@@ -26,7 +27,7 @@ class ICMPPingTest {
     }
 
     @Test
-    void testCall_Failure() {
+    void call_Failure() {
         // arrange
         result = new PingResult("nonexistent.host");  // Simulating an unreachable host
         icmpPing = new ICMPPing(result, timeout);
