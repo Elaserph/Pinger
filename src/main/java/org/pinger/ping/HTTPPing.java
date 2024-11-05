@@ -9,6 +9,10 @@ import java.net.URL;
 import java.util.concurrent.Callable;
 import java.util.logging.Logger;
 
+/**
+ * The HTTPPing class performs an HTTP GET request to a specified host
+ * and logs the results.
+ */
 public class HTTPPing implements Callable<Boolean> {
 
     private static final Logger logger = LoggerUtil.getLogger();
@@ -24,6 +28,11 @@ public class HTTPPing implements Callable<Boolean> {
         this.maxResponseTime = maxResponseTime;
     }
 
+    /**
+     * Executes the HTTP GET request and processes the results.
+     *
+     * @return true if the HTTP request is successful and within the allowed response time, false otherwise.
+     */
     @Override
     public Boolean call() {
         try {

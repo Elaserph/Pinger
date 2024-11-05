@@ -2,6 +2,10 @@ package org.pinger.model;
 
 import java.io.Serializable;
 
+/**
+ * The PingResult class stores the results of various ping operations (ICMP, HTTP/TCP, Trace Route)
+ * for a given host.
+ */
 public class PingResult implements Serializable {
 
     private final String host;
@@ -29,6 +33,11 @@ public class PingResult implements Serializable {
         this.traceResult = traceResult;
     }
 
+    /**
+     * Converts the ping results to a JSON formatted string for Report
+     *
+     * @return a JSON representation of the ping results.
+     */
     public String toJson() {
         return "{" +
                 "\"host\":\"" + host + "\", " +

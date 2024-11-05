@@ -8,6 +8,9 @@ import java.io.InputStreamReader;
 import java.util.concurrent.Callable;
 import java.util.logging.Logger;
 
+/**
+ * The TraceRoute class performs Trace Route to a specified host
+ */
 public class TraceRoute implements Callable<Boolean> {
 
     private static final Logger logger = LoggerUtil.getLogger();
@@ -21,6 +24,11 @@ public class TraceRoute implements Callable<Boolean> {
         this.timeout = timeout;
     }
 
+    /**
+     * Executes the Trace Route and processes the results.
+     *
+     * @return false on exception, true otherwise.
+     */
     @Override
     public Boolean call() {
         try {

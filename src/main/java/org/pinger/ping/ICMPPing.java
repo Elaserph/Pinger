@@ -8,6 +8,9 @@ import java.io.InputStreamReader;
 import java.util.concurrent.Callable;
 import java.util.logging.Logger;
 
+/**
+ * The ICMPPing class performs an ICMP ping to a specified host
+ */
 public class ICMPPing implements Callable<Boolean> {
 
     private static final Logger logger = LoggerUtil.getLogger();
@@ -21,6 +24,11 @@ public class ICMPPing implements Callable<Boolean> {
         this.timeout = timeout;
     }
 
+    /**
+     * Executes the ICMP ping and processes the results.
+     *
+     * @return true if the ICMP ping is successful, false otherwise.
+     */
     @Override
     public Boolean call() {
         try {

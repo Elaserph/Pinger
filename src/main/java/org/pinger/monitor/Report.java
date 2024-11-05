@@ -9,6 +9,9 @@ import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.util.logging.Logger;
 
+/**
+ * The Report class is responsible for sending JSON reports to a specified URL.
+ */
 public class Report {
 
     private static final Logger logger = LoggerUtil.getLogger();
@@ -18,6 +21,12 @@ public class Report {
         Report.reportURL = reportUrl;
     }
 
+    /**
+     * Sends a report with the specified JSON body to the report URL.
+     *
+     * @param jsonBody The JSON formatted string to be sent in the report.
+     * @return true if the report is sent successfully, false otherwise.
+     */
     public boolean sendReport(String jsonBody) {
         try {
             int responseCode = getHttpResponse(jsonBody);
@@ -36,6 +45,13 @@ public class Report {
         }
     }
 
+    /**
+     * Sends an HTTP POST request with the specified JSON body to the report URL.
+     *
+     * @param jsonBody The JSON formatted string to be sent in the request body.
+     * @return The HTTP response code from the server.
+     * @throws IOException If an input or output exception occurs.
+     */
     public int getHttpResponse(String jsonBody) throws IOException {
         URL url = new URL(reportURL);
         HttpURLConnection connection = (HttpURLConnection) url.openConnection();

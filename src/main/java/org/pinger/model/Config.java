@@ -2,6 +2,9 @@ package org.pinger.model;
 
 import java.util.List;
 
+/**
+ * Configuration class to hold the user-defined configurations for the Ping Monitor application.
+ */
 public class Config {
 
     private List<String> hosts;
@@ -68,6 +71,11 @@ public class Config {
         this.maxResponseTime = maxResponseTime;
     }
 
+    /**
+     * Checks whether all necessary properties are set and valid.
+     *
+     * @return True if all properties are valid, false otherwise.
+     */
     public boolean checkProperties() {
         return this.hosts != null && !this.hosts.isEmpty() && this.delay != 0 && this.icmpTimeout != 0
                 && this.httpTimeout != 0 && this.maxResponseTime != 0 && this.traceTimeout != 0 && this.reportURL != null;

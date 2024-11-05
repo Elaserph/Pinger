@@ -7,14 +7,27 @@ import org.pinger.util.LoggerUtil;
 
 import java.util.logging.Logger;
 
+/**
+ * The SimplePingApplication class is the entry point for the Ping Monitor application.
+ *
+ * @author <a href="https://github.com/Elaserph">elaserph</a>
+ */
 public class SimplePingApplication {
 
     private static final Logger defaultLogger = Logger.getLogger(SimplePingApplication.class.getName());
     private static final Logger logger = LoggerUtil.getLogger();
+    private static final String DEFAULT_CONFIG_FILE_PATH = "../config.properties";
 
+    /**
+     * Entry point.
+     * Loads the user configuration from a specified properties file, validates the configuration,
+     * and starts the PingMonitor if the configuration is valid.
+     *
+     * @param args Command line arguments. The first argument is the path to the configuration file.
+     */
     public static void main(String[] args) {
         String configFilePath = (args != null && args.length > 0) ?
-                args[0] : "../Config.properties"; // default config file path
+                args[0] : DEFAULT_CONFIG_FILE_PATH;
 
         // load user configurations from config.properties file
         Config loadedConfig = ConfigLoader.loadConfig(configFilePath);

@@ -5,13 +5,23 @@ import java.util.logging.FileHandler;
 import java.util.logging.Logger;
 import java.util.logging.SimpleFormatter;
 
+/**
+ * Utility class for setting up and managing the logger for the PingMonitor application.
+ * This class cannot be instantiated.
+ */
 public final class LoggerUtil {
 
     private static final Logger logger = Logger.getLogger("PingMonitorLogger");
 
+    // constructor private for utility class
     private LoggerUtil() {
     }
 
+    /**
+     * Sets up the logger with the specified log file name.
+     *
+     * @param logFileName The name of the log file.
+     */
     public static void setupLogger(String logFileName) {
         try {
             // by default log file will be created in pwd

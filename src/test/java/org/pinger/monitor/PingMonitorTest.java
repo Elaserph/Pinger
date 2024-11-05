@@ -22,7 +22,7 @@ class PingMonitorTest extends AbstractTest {
         mockConfig = mock(Config.class);
 
         // Configure mock behavior for config
-        when(mockConfig.getHosts()).thenReturn(Arrays.asList("example.com", "nonexistent.host"));
+        when(mockConfig.getHosts()).thenReturn(Arrays.asList("example.com", "nonexistent.host", "", "  "));
         when(mockConfig.getDelay()).thenReturn(100);
         when(mockConfig.getIcmpTimeout()).thenReturn(2000);
         when(mockConfig.getHTTPTimeout()).thenReturn(2000);

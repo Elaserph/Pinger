@@ -21,6 +21,7 @@ Note: `Pinger` is runnable within expectations on Windows.
 ```bash
 ./mvnw.cmd clean install
 ```
+
 or, if maven installed on local system, please open cmd, navigate to `Pinger` folder and run command:
 
 ```bash
@@ -38,12 +39,12 @@ After successful maven build, an executable jar will be created in `target` fold
 
 ![img.png](docs/executableJar.png) <br>
 
-Which can be executed using:
+which can be executed using:
 
 ```bash
 java -jar Pinger-1.0-SNAPSHOT.jar config.properties
 ```
-Note: Please provide full path to `config.properties` file as parameter in the above command, sample run snapshot:
+Note: Please use correct jar version and provide full path to `config.properties` file as parameter in the above command, sample run snapshot:
 
 ![img.png](docs/CmdRunPingApp.png)
 
