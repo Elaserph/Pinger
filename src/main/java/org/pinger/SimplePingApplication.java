@@ -13,8 +13,11 @@ public class SimplePingApplication {
     private static final Logger logger = LoggerUtil.getLogger();
 
     public static void main(String[] args) {
+        String configFilePath = (args != null && args.length > 0) ?
+                args[0] : "../Config.properties"; // default config file path
+
         // load user configurations from config.properties file
-        Config loadedConfig = ConfigLoader.loadConfig();
+        Config loadedConfig = ConfigLoader.loadConfig(configFilePath);
         // check sanity
         if (loadedConfig.checkProperties()) {
             PingMonitor monitor = new PingMonitor(loadedConfig);

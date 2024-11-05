@@ -15,7 +15,7 @@ public final class LoggerUtil {
     public static void setupLogger(String logFileName) {
         try {
             // by default log file will be created in pwd
-            FileHandler fh = new FileHandler("../" + logFileName, true);
+            FileHandler fh = new FileHandler(logFileName, true);
             fh.setFormatter(new SimpleFormatter());
             logger.addHandler(fh);
             logger.setUseParentHandlers(false);

@@ -18,12 +18,12 @@ public final class ConfigLoader {
     private ConfigLoader() {
     }
 
-    public static Config loadConfig() {
+    public static Config loadConfig(String configFilePath) {
         Properties properties = new Properties();
         Config config = new Config();
 
         // config file need to be present in pwd
-        try (InputStream input = Files.newInputStream(Paths.get("../Config.properties"))) {
+        try (InputStream input = Files.newInputStream(Paths.get(configFilePath))) {
             properties.load(input);
             // load all configurations into config object
             config.setHosts(Arrays.asList(properties.getProperty("hosts").split(",")));
