@@ -29,6 +29,7 @@ public final class LoggerUtil {
             fh.setFormatter(new SimpleFormatter());
             logger.addHandler(fh);
             logger.setUseParentHandlers(false);
+            logger.info("Initialised log file by the name: " + logFileName);
         } catch (IOException e) {
             logger.severe("Failed to set up logger: " + e.getMessage());
         }
