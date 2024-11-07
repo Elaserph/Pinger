@@ -9,11 +9,6 @@ This README provides steps to build and run the application and more.
 - Maven 3.9.9 - can use enclosed maven wrapper by changing maven home settings of IDE.
 - IDE similar to IntelliJ to explore codebase
 
-## Requirements
-
-Please refer the pdf in docs folder for requirements:
-[JavaSimplePingAppRequirements.pdf](docs/JavaSimplePingApp.pdf) <br>
-
 Note: `Pinger` is runnable within expectations on Windows.
 
 ## Build and Run
